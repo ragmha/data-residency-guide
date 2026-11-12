@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" role="img" aria-label="Four layers of sovereignty. Data location: strong, code, history, logs and backups stored in the EU. Operational control: shared, GitHub operates the service with SOC 2 and ISO 27001 evidence. Legal jurisdiction: mixed, a US provider with contractual notice and challenge commitments. Portability: good for code, Git clones and a 90-day migration window. Each layer lists what you add.">
+  <g font-size="13" font-weight="600" letter-spacing=".6" class="muted">
+    <text x="24" y="30">LAYER AND QUESTION</text>
+    <text x="380" y="30">WHAT GHE.COM IN THE EU GIVES YOU</text>
+    <text x="700" y="30">WHAT YOU ADD</text>
+  </g>
+
+  <rect class="focus" x="24" y="46" width="912" height="84" rx="8"/>
+  <text class="ink" x="44" y="80" font-size="17" font-weight="700">1  Data location</text>
+  <text class="muted" x="44" y="104" font-size="14">Where is data stored at rest?</text>
+  <text class="accent" x="380" y="72" font-size="15" font-weight="700">Strong</text>
+  <text class="ink" x="380" y="94" font-size="14">Code, history, logs and backups</text>
+  <text class="ink" x="380" y="114" font-size="14">stored in the EU (DPA §7.A)</text>
+  <text class="ink" x="700" y="84" font-size="14">Decide on each documented</text>
+  <text class="ink" x="700" y="104" font-size="14">exception</text>
+
+  <rect class="box" x="24" y="144" width="912" height="84" rx="8"/>
+  <text class="ink" x="44" y="178" font-size="17" font-weight="700">2  Operational control</text>
+  <text class="muted" x="44" y="202" font-size="14">Who runs and can access the service?</text>
+  <text class="ink" x="380" y="170" font-size="15" font-weight="700">Shared</text>
+  <text class="ink" x="380" y="192" font-size="14">GitHub operates the service;</text>
+  <text class="ink" x="380" y="212" font-size="14">SOC 2 and ISO 27001 evidence</text>
+  <text class="ink" x="700" y="182" font-size="14">Your IdP owns identities;</text>
+  <text class="ink" x="700" y="202" font-size="14">stream the audit log</text>
+
+  <rect class="warn" x="24" y="242" width="912" height="84" rx="8"/>
+  <text class="ink" x="44" y="276" font-size="17" font-weight="700">3  Legal jurisdiction</text>
+  <text class="muted" x="44" y="300" font-size="14">Which law can compel access?</text>
+  <text class="amber" x="380" y="268" font-size="15" font-weight="700">Mixed</text>
+  <text class="ink" x="380" y="290" font-size="14">US provider under US law; DPA</text>
+  <text class="ink" x="380" y="310" font-size="14">commits to notify and challenge</text>
+  <text class="ink" x="700" y="280" font-size="14">Encrypt the most sensitive</text>
+  <text class="ink" x="700" y="300" font-size="14">data; assess transfers</text>
+
+  <rect class="box" x="24" y="340" width="912" height="84" rx="8"/>
+  <text class="ink" x="44" y="374" font-size="17" font-weight="700">4  Portability</text>
+  <text class="muted" x="44" y="398" font-size="14">Can we leave?</text>
+  <text class="ink" x="380" y="366" font-size="15" font-weight="700">Good for code</text>
+  <text class="ink" x="380" y="388" font-size="14">Git clones keep full history;</text>
+  <text class="ink" x="380" y="408" font-size="14">90 days to migrate after exit</text>
+  <text class="ink" x="700" y="378" font-size="14">Mirror critical repositories;</text>
+  <text class="ink" x="700" y="398" font-size="14">test the exit every year</text>
+
+  <text class="muted" x="24" y="455" font-size="14">Residency answers layer 1 directly. Layers 2 to 4 need contracts, controls and an exit plan.</text>
+</svg>

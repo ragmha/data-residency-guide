@@ -1,0 +1,174 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Diagram from '../components/Diagram.astro';
+import { chapters, coursePath, parts } from '../course';
+import '../styles/global.css';
+
+interface Props {
+  page: CollectionEntry<'guide'>;
+  headings: { depth: number; slug: string; text: string }[];
+}
+const { page, headings } = Astro.props;
+const pages = await getCollection('guide');
+const entryFor = (id: string) => {
+  const entry = pages.find(entry => entry.id === id);
+  if (!entry) throw new Error(`Missing course content: ${id}`);
+  return entry;
+};
+const sequence = ['start', ...chapters.map(chapter => chapter.id)];
+const current = sequence.indexOf(page.id);
+const previous = current > 0 ? entryFor(sequence[current - 1]) : undefined;
+const next = current >= 0 && current < sequence.length - 1 ? entryFor(sequence[current + 1]) : undefined;
+const chapter = chapters.find(chapter => chapter.id === page.id);
+const titleFor = (entry: CollectionEntry<'guide'>) => {
+  const chapter = chapters.find(chapter => chapter.id === entry.id);
+  return chapter ? `${chapter.number} ${entry.data.title}` : entry.id === 'start' ? 'Course index' : entry.data.title;
+};
+const outlineParts = parts.filter((_, index) => page.id === 'start' || (chapter?.kind === 'overview' && chapter.part === index + 1));
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (id: string) => `${base}/${coursePath(id)}${id === 'start' ? '' : '/'}`;
+const stale = Date.now() - new Date(`${page.data.verified}T00:00:00Z`).getTime() > 30 * 86400000;
+const titleWords = page.data.title.split(' ');
+const titleEmphasis = page.id === 'start' ? titleWords.splice(-3).join(' ') : '';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={page.data.description} />
+    <meta name="color-scheme" content="light dark" />
+    <title>{titleFor(page)}{chapter ? ` · ${chapter.partTitle}` : ''} · EU Data Residency Guide</title>
+    <script is:inline>
+      (() => {
+        let preference = 'system';
+        try { preference = localStorage.getItem('theme') || 'system'; } catch {}
+        const dark = preference === 'dark' || (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.documentElement.dataset.preference = preference;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="topbar">
+      <a class="brand" href={`${base}/`} aria-label="EU Data Residency Guide home">
+        <svg class="brand-mark" aria-hidden="true" viewBox="0 0 16 16" width="30" height="30"><path d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"/></svg>
+        Learning Guide
+      </a>
+      <nav class="breadcrumbs" aria-label="Breadcrumb"><span>EU data residency</span><span aria-hidden="true">/</span><span>{chapter ? `Part ${chapter.part}: ${chapter.partTitle}` : page.data.section}</span></nav>
+      <label class="theme-label"><span aria-hidden="true">◐</span><span class="sr-only">Color theme</span><select id="theme" aria-label="Color theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+    </header>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="edition">COURSE CONTENTS<span>GitHub data residency · EU</span></div>
+        <details class="chapter-nav" open>
+          <summary>Explore the course <span aria-hidden="true">⌄</span></summary>
+          <nav aria-label="Guide chapters">
+            <a class="course-home" href={href('start')} aria-current={page.id === 'start' ? 'page' : undefined}>Course index</a>
+            {parts.map((part, index) => (
+              <section class="course-part">
+                <h2><span class="chapter-number">Part {index + 1}</span> {part.title}</h2>
+                <div class="chapter-pages">{part.pages.map(id => {
+                  const entry = entryFor(id);
+                  return <a href={href(id)} aria-current={id === page.id ? 'page' : undefined}>{titleFor(entry)}</a>;
+                })}</div>
+              </section>
+            ))}
+            <div class="course-appendix"><span>Appendix</span><a href={href('sources')} aria-current={page.id === 'sources' ? 'page' : undefined}>Sources & verification</a></div>
+          </nav>
+        </details>
+        <div class="sidebar-note">Know where your data lives.<br />Prove it with sources.</div>
+      </aside>
+      <main id="content">
+        <div class="article-grid">
+          <article>
+            <div class="eyebrow">{chapter ? `Part ${chapter.part}: ${chapter.partTitle}` : page.data.section}<span class="eyebrow-line"></span></div>
+            <h1>{chapter && <span class="lesson-number">{chapter.number} </span>}{titleWords.join(' ')}{titleEmphasis && <> <span class="title-emphasis">{titleEmphasis}</span></>}</h1>
+            <p class="lede">{page.data.description}</p>
+            <div class="page-meta"><span>INDEPENDENT GUIDE</span><span>Reviewed {page.data.verified}</span>{stale && <strong class="status caution">Review overdue · verify against sources</strong>}</div>
+            {page.data.diagram && <section class="diagram-section" aria-label="Visual explanation">
+              <div class="figure-label">VISUAL LESSON</div>
+              <Diagram name={page.data.diagram} />
+            </section>}
+            <div class="prose"><slot /></div>
+            {outlineParts.length > 0 && <div class="course-outline prose">
+              {outlineParts.map(part => {
+                const partNumber = parts.indexOf(part) + 1;
+                return <section>
+                  <h2 id={`part-${partNumber}`}>{page.id === 'start' ? `Part ${partNumber}: ${part.title}` : 'Chapters in this part'}</h2>
+                  <ol>{part.pages.filter(id => id !== page.id).map(id => {
+                    const entry = entryFor(id);
+                    return <li><a href={href(id)}>{titleFor(entry)}</a><p>{entry.data.description}</p></li>;
+                  })}</ol>
+                </section>;
+              })}
+            </div>}
+            {page.data.scenarioDiagram && <section class="diagram-section" aria-label="Scenario visual">
+              <div class="figure-label">APPLY THE CONCEPT</div>
+              <Diagram name={page.data.scenarioDiagram} />
+            </section>}
+            {page.data.checks && <section class="self-check prose" aria-labelledby="check-your-understanding">
+              <h2 id="check-your-understanding">Check your understanding</h2>
+              <p>Try each question before opening the answer.</p>
+              {page.data.checks.map(check => <details><summary>{check.question}</summary><p>{check.answer}</p></details>)}
+            </section>}
+            <section class="source-note" aria-labelledby="page-sources">
+              <h2 id="page-sources">Sources & freshness</h2>
+              <p>Source review: <time datetime={page.data.verified}>{page.data.verified}</time>. This independent guide is not legal advice, a contract, or a substitute for your own agreements. Source links are authoritative; recommendations are labeled as guide advice.</p>
+              <ul>{page.data.sources.map((source) => <li><a href={source} target="_blank" rel="noopener noreferrer">{new URL(source).hostname} / {new URL(source).pathname.split('/').filter(Boolean).at(-1)?.replaceAll('-', ' ')} ↗</a></li>)}</ul>
+            </section>
+            <nav class="pagination" aria-label="Reading sequence">{previous ? <a rel="prev" href={href(previous.id)}><small>← PREVIOUS</small>{titleFor(previous)}</a> : <span></span>}{next ? <a class="next" rel="next" href={href(next.id)}><small>NEXT CHAPTER →</small>{titleFor(next)}</a> : <a class="next" href={href('start')}><small>{page.id === 'sources' ? 'RETURN TO COURSE →' : 'COURSE COMPLETE →'}</small>Course index</a>}</nav>
+            <footer class="article-footer">EU Data Residency Guide <span>Independent guidance. Official sources, clearly linked.</span></footer>
+          </article>
+          <aside class="toc" aria-label="On this page"><div>ON THIS PAGE</div>{headings.filter((h) => h.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}{outlineParts.map(part => <a href={`#part-${parts.indexOf(part) + 1}`}>{page.id === 'start' ? part.title : 'Chapters in this part'}</a>)}{page.data.checks && <a href="#check-your-understanding">Check your understanding</a>}<a href="#page-sources">Sources & freshness</a></aside>
+        </div>
+      </main>
+    </div>
+    <script>
+      const select = document.querySelector<HTMLSelectElement>('#theme')!;
+      const media = matchMedia('(prefers-color-scheme: dark)');
+      const mobile = matchMedia('(max-width: 760px)');
+      const navigation = document.querySelector<HTMLDetailsElement>('.chapter-nav')!;
+      function syncNavigation() {
+        navigation.open = !mobile.matches;
+        const sidebar = navigation.closest<HTMLElement>('.sidebar')!;
+        if (!mobile.matches && sidebar.scrollHeight > sidebar.clientHeight) {
+          const active = navigation.querySelector<HTMLAnchorElement>('[aria-current="page"]')!.getBoundingClientRect();
+          const bounds = sidebar.getBoundingClientRect();
+          if (active.top < bounds.top || active.bottom > bounds.bottom) {
+            sidebar.scrollTop += active.top - bounds.top - (sidebar.clientHeight - active.height) / 2;
+          }
+        }
+      }
+      syncNavigation();
+      mobile.addEventListener('change', syncNavigation);
+      document.querySelectorAll<HTMLButtonElement>('[data-diagram-size]').forEach((button) => {
+        button.hidden = false;
+        button.addEventListener('click', () => {
+          const zoomed = button.closest('figure')!.classList.toggle('diagram-zoomed');
+          button.setAttribute('aria-pressed', String(zoomed));
+          button.textContent = zoomed ? 'Fit figure to screen' : 'Zoom figure';
+        });
+      });
+      select.value = document.documentElement.dataset.preference || 'system';
+      function applyTheme() {
+        const preference = select.value;
+        const theme = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.preference = preference;
+        document.querySelectorAll<HTMLAnchorElement>('[data-diagram-link]').forEach((link) => {
+          const url = new URL(link.href);
+          url.hash = theme;
+          link.href = url.href;
+        });
+      }
+      select.addEventListener('change', () => {
+        try { localStorage.setItem('theme', select.value); } catch {}
+        applyTheme();
+      });
+      media.addEventListener('change', applyTheme);
+      applyTheme();
+    </script>
+  </body>
+</html>

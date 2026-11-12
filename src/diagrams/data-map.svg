@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" role="img" aria-label="Data map. Stored in the EU region: repositories and source code, pull requests, issues and comments, Actions data and logs, backups and disaster recovery, and user identity data. Documented exceptions that may be stored outside the region: telemetry with identifiers, billing and licence data, support and feedback data, Copilot data unless the residency policy is enabled, opt-in secret scanning checks, and TLS certificate data. Your integrations, such as self-hosted runners, webhooks and apps, audit log stream destinations and developer machines, are part of your perimeter.">
+  <rect class="focus" x="24" y="24" width="430" height="320" rx="10"/>
+  <text class="ink" x="48" y="62" font-size="19" font-weight="700">Stored in the EU region</text>
+  <text class="muted" x="48" y="86" font-size="13">EU locations plus Azure regions in Norway and Switzerland</text>
+  <g font-size="15" class="ink">
+    <circle class="accent" cx="56" cy="124" r="5"/><text x="72" y="129">Repositories and source code</text>
+    <circle class="accent" cx="56" cy="160" r="5"/><text x="72" y="165">Pull requests, issues and comments</text>
+    <circle class="accent" cx="56" cy="196" r="5"/><text x="72" y="201">Actions data and logs</text>
+    <circle class="accent" cx="56" cy="232" r="5"/><text x="72" y="237">Backups and disaster recovery</text>
+    <circle class="accent" cx="56" cy="268" r="5"/><text x="72" y="273">User identity: email, username, name, IP</text>
+  </g>
+  <text class="accent" x="48" y="320" font-size="14" font-weight="700">Anchored by DPA §7.A</text>
+
+  <rect class="warn" x="506" y="24" width="430" height="320" rx="10"/>
+  <text class="ink" x="530" y="62" font-size="19" font-weight="700">May be stored outside</text>
+  <text class="muted" x="530" y="86" font-size="13">Documented by GitHub; each needs your decision</text>
+  <g font-size="15" class="ink">
+    <text x="530" y="129">Telemetry with identifiers</text><text class="muted" x="912" y="129" text-anchor="end" font-size="13">ACCEPT</text>
+    <text x="530" y="165">Billing and licence data</text><text class="muted" x="912" y="165" text-anchor="end" font-size="13">MINIMISE</text>
+    <text x="530" y="201">Support and feedback data</text><text class="muted" x="912" y="201" text-anchor="end" font-size="13">POLICY</text>
+    <text x="530" y="237" font-weight="700">Copilot data, by default</text><text class="amber" x="912" y="237" text-anchor="end" font-size="13" font-weight="700">ENABLE POLICY</text>
+    <text x="530" y="273">Secret scanning checks (opt-in)</text><text class="muted" x="912" y="273" text-anchor="end" font-size="13">DECIDE</text>
+    <text x="530" y="309">TLS certificate data</text><text class="muted" x="912" y="309" text-anchor="end" font-size="13">ACCEPT</text>
+  </g>
+
+  <path class="line" d="M454 184 H506" stroke-dasharray="5 5"/>
+
+  <rect class="box" x="24" y="370" width="912" height="106" rx="10"/>
+  <text class="ink" x="48" y="404" font-size="17" font-weight="700">Your perimeter also includes what you connect</text>
+  <g font-size="15" class="ink">
+    <text x="48" y="440">Self-hosted runners</text>
+    <text x="260" y="440">Webhooks and apps</text>
+    <text x="460" y="440">Audit log stream destination</text>
+    <text x="720" y="440">Developer machines</text>
+  </g>
+  <text class="muted" x="48" y="464" font-size="13">Residency covers where GitHub stores data. Data you send elsewhere goes where you send it.</text>
+</svg>

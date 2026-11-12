@@ -1,0 +1,62 @@
+---
+// ponytail: inline SVG themed by CSS variables; one file per diagram, no light/dark export pipeline.
+const svgs = import.meta.glob<string>('../diagrams/*.svg', { query: '?raw', import: 'default', eager: true });
+
+const diagrams = {
+  'sovereignty-layers': {
+    title: 'Residency is one layer of sovereignty',
+    description: 'Data sovereignty stacks four questions: where data is stored, who can operate the service, which law can compel access, and whether you can leave. GHE.com in the EU answers the first directly and contributes to the others; contracts, encryption choices and an exit plan cover the rest.',
+  },
+  'data-map': {
+    title: 'What stays in the EU, and what is documented as an exception',
+    description: 'Code, collaboration history, Actions logs, backups and user identity data are stored in the EU region. GitHub documents a short list of categories that may be stored outside it, including Copilot data unless you enable the residency policy. Each needs a decision. Your own integrations sit outside GitHub\'s residency promise.',
+  },
+  'adoption-path': {
+    title: 'Five steps from question to production',
+    description: 'Decide the requirement, sign the paper, prepare identity and network, migrate in waves, then operate with evidence. Each step has a named owner and an exit artefact.',
+  },
+};
+
+interface Props { name: keyof typeof diagrams }
+const { name } = Astro.props;
+const { title, description } = diagrams[name];
+const svg = svgs[`../diagrams/${name}.svg`];
+if (!svg) throw new Error(`Missing diagram source: ${name}`);
+const headingId = `${name}-heading`;
+---
+
+<figure class="diagram-embed" aria-labelledby={headingId}>
+  <h3 id={headingId}>{title}</h3>
+  <div class="diagram-tools">
+    <button class="diagram-zoom" type="button" data-diagram-size aria-pressed="false" aria-controls={`${name}-viewport`} hidden>Zoom figure</button>
+  </div>
+  <div id={`${name}-viewport`} class="diagram-scroll" tabindex="0" role="region" aria-label={`${title}. When zoomed, scroll horizontally to explore.`}>
+    <Fragment set:html={svg} />
+  </div>
+  <figcaption><p>{description}</p></figcaption>
+</figure>
+
+<style>
+  .diagram-embed { min-width: 0; margin: 1rem 0 2rem; }
+  h3 { color: var(--ink); font: 650 19px/1.4 var(--font-sans); margin: 0 0 16px; }
+  .diagram-tools { display: flex; gap: 20px; font-size: 13px; }
+  .diagram-zoom { display: none; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 14px; margin-bottom: 12px; cursor: pointer; }
+  .diagram-zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .diagram-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+  .diagram-scroll :global(svg) { display: block; width: 100%; min-width: 640px; height: auto; font-family: var(--font-sans); }
+  @media (max-width: 760px) {
+    .diagram-zoom:not([hidden]) { display: inline-block; }
+    .diagram-scroll :global(svg) { min-width: 0; }
+    .diagram-zoomed .diagram-scroll :global(svg) { min-width: 640px; }
+  }
+  figcaption { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+  figcaption p { margin: 0; }
+  .diagram-scroll :global(.ink) { fill: var(--ink); }
+  .diagram-scroll :global(.muted) { fill: var(--muted); }
+  .diagram-scroll :global(.box) { fill: var(--inset); stroke: var(--rule); }
+  .diagram-scroll :global(.focus) { fill: var(--tint); stroke: var(--accent); stroke-width: 2; }
+  .diagram-scroll :global(.warn) { fill: var(--amber-bg); stroke: var(--amber); }
+  .diagram-scroll :global(.accent) { fill: var(--accent); }
+  .diagram-scroll :global(.amber) { fill: var(--amber); }
+  .diagram-scroll :global(.line) { stroke: var(--muted); fill: none; stroke-width: 1.5; }
+</style>
