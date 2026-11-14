@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" role="img" aria-label="Adoption path in five steps. 1 Decide: requirement and stakeholders, owned by the DPO and legal; output is the data map and transfer assessment. 2 Contract: purchase route and DPA, owned by legal and procurement; output is the signed terms. 3 Trial and prepare: identity, network and Copilot policy, owned by the platform team; output is the go or no-go checklist. 4 Migrate: pilots then waves, owned by the platform team; output is the migration log. 5 Operate: audit stream, reviews and exit tests, owned by security; output is the evidence pack.">
+  <g font-size="13" font-weight="600" letter-spacing=".6" class="muted">
+    <text x="24" y="30">STEP</text>
+    <text x="24" y="262">OWNER</text>
+    <text x="24" y="318">EXIT ARTEFACT</text>
+  </g>
+
+  <path class="line" d="M190 120 H206 M372 120 H388 M554 120 H570 M736 120 H752"/>
+  <path class="line" d="M200 114 L206 120 L200 126 M382 114 L388 120 L382 126 M564 114 L570 120 L564 126 M746 114 L752 120 L746 126"/>
+
+  <rect class="box" x="24" y="46" width="166" height="148" rx="8"/>
+  <text class="accent" x="40" y="78" font-size="14" font-weight="700">1</text>
+  <text class="ink" x="40" y="104" font-size="18" font-weight="700">Decide</text>
+  <text class="muted" x="40" y="132" font-size="14">Requirement,</text>
+  <text class="muted" x="40" y="152" font-size="14">stakeholders,</text>
+  <text class="muted" x="40" y="172" font-size="14">data map</text>
+
+  <rect class="box" x="206" y="46" width="166" height="148" rx="8"/>
+  <text class="accent" x="222" y="78" font-size="14" font-weight="700">2</text>
+  <text class="ink" x="222" y="104" font-size="18" font-weight="700">Contract</text>
+  <text class="muted" x="222" y="132" font-size="14">Purchase route,</text>
+  <text class="muted" x="222" y="152" font-size="14">DPA version,</text>
+  <text class="muted" x="222" y="172" font-size="14">sector gaps</text>
+
+  <rect class="focus" x="388" y="46" width="166" height="148" rx="8"/>
+  <text class="accent" x="404" y="78" font-size="14" font-weight="700">3</text>
+  <text class="ink" x="404" y="104" font-size="18" font-weight="700">Trial</text>
+  <text class="ink" x="404" y="132" font-size="14">Identity, network,</text>
+  <text class="ink" x="404" y="152" font-size="14">Copilot policy,</text>
+  <text class="ink" x="404" y="172" font-size="14">exit test</text>
+
+  <rect class="box" x="570" y="46" width="166" height="148" rx="8"/>
+  <text class="accent" x="586" y="78" font-size="14" font-weight="700">4</text>
+  <text class="ink" x="586" y="104" font-size="18" font-weight="700">Migrate</text>
+  <text class="muted" x="586" y="132" font-size="14">Pilot repositories,</text>
+  <text class="muted" x="586" y="152" font-size="14">then waves</text>
+
+  <rect class="box" x="752" y="46" width="184" height="148" rx="8"/>
+  <text class="accent" x="768" y="78" font-size="14" font-weight="700">5</text>
+  <text class="ink" x="768" y="104" font-size="18" font-weight="700">Operate</text>
+  <text class="muted" x="768" y="132" font-size="14">Audit stream,</text>
+  <text class="muted" x="768" y="152" font-size="14">quarterly review,</text>
+  <text class="muted" x="768" y="172" font-size="14">yearly exit test</text>
+
+  <path class="line" d="M24 228 H936" stroke-dasharray="3 5"/>
+
+  <g font-size="14" class="ink">
+    <text x="24" y="284">DPO, legal</text>
+    <text x="206" y="284">Legal, procurement</text>
+    <text x="388" y="284">Platform team</text>
+    <text x="570" y="284">Platform team</text>
+    <text x="752" y="284">CISO, platform</text>
+    <text x="24" y="340">Transfer assessment</text>
+    <text x="206" y="340">Signed terms</text>
+    <text x="388" y="340">Go or no-go list</text>
+    <text x="570" y="340">Migration log</text>
+    <text x="752" y="340">Evidence pack</text>
+  </g>
+</svg>
